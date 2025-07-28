@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>С Днем Рождения!</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #fff;
+            overflow: hidden;
+            position: relative;
+        }
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+            z-index: 10;
+            position: relative;
+        }
+        h1 {
+            color: #ff69b4;
+            font-size: 3.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        .boxes {
+            display: flex;
+            gap: 40px;
+            margin-top: 50px;
+        }
+        .box {
+            width: 120px; height: 120px; background-color: #f0a5a5; border: 3px solid #d18484;
+            border-radius: 15px; display: flex; justify-content: center; align-items: center;
+            font-size: 5em; color: white; font-weight: bold; cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .box:hover {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .secret-container {
+            display: none; 
+            margin-top: 50px;
+            flex-direction: column;
+            align-items: center;
+            animation: fadeIn 1s; 
+        }
+        .secret-box {
+            width: 100px; height: 100px; border-radius: 50%; display: flex;
+            justify-content: center; align-items: center; font-size: 3em;
+            color: white; cursor: pointer; transition: transform 0.3s ease;
+        }
+        .secret-box:hover { transform: scale(1.1); }
+        .secret-container p { margin-top: 10px; font-size: 1.2em; color: #555; }
+
+        #secret-box-1 { background-color: #ffd700; border: 3px solid #e6c300; } 
+        #secret-box-2 { background-color: #c0c0c0; border: 3px solid #a9a9a9; } 
+        #secret-box-3 { background-color: #ff4757; border: 3px solid #e04050; } 
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hearts-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; }
+        .heart { position: absolute; width: 20px; height: 20px; background-color: #ff69b4; transform: rotate(-45deg); animation: fall 10s linear infinite; }
+        .heart::before, .heart::after { content: ''; position: absolute; width: 20px; height: 20px; background-color: #ff69b4; border-radius: 50%; }
+        .heart::before { top: -10px; left: 0; }
+        .heart::after { top: 0; left: 10px; }
+        @keyframes fall { 0% { top: -10%; opacity: 1; } 100% { top: 110%; opacity: 0; } }
+        .modal { display: none; position: fixed; z-index: 100; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); justify-content: center; align-items: center; }
+        .modal-content { background-color: #fff; padding: 30px; border-radius: 15px; text-align: center; position: relative; animation: zoomIn 0.4s; max-width: 90%; }
+        .modal-content img { max-width: 80vw; max-height: 60vh; border-radius: 10px; margin-bottom: 15px; }
+        .modal-content p { font-size: 1.5em; color: #333; }
+        .close { position: absolute; top: 10px; right: 20px; color: #aaa; font-size: 30px; font-weight: bold; cursor: pointer; }
+        @keyframes zoomIn { from { transform: scale(0); } to { transform: scale(1); } }
+    </style>
+</head>
+<body>
+    <div class="hearts-container"></div>
+
+    <div class="main-content">
+        <h1>С Днем Рождения, Ганифа😘😘!</h1>
+        <div class="boxes">
+            <div class="box" onclick="showSurprise(1)">?</div>
+            <div class="box" onclick="showSurprise(2)">?</div>
+            <div class="box" onclick="showSurprise(3)">?</div>
+        </div>
+
+        <div id="secret-container-1" class="secret-container">
+            <p>А теперь... сюрприз!</p>
+            <div id="secret-box-1" class="secret-box" onclick="showSurprise(4)">🎁</div>
+        </div>
+        <div id="secret-container-2" class="secret-container">
+            <p>Почти...</p>
+            <div id="secret-box-2" class="secret-box" onclick="showSurprise(5)">💝</div>
+        </div>
+        <div id="secret-container-3" class="secret-container">
+            <p>Всё самое лучшее для тебя!</p>
+            <div id="secret-box-3" class="secret-box" onclick="showSurprise(6)">💖</div>
+        </div>
+    </div>
+
+
+    <div id="surprise-1" class="modal"><div class="modal-content"><span class="close" onclick="closeSurprise(1)">&times;</span><img src="photo1.jpg" alt="Фото 1"><p>Ты самая красивая девушка, которую я когда либо видел!!!</p></div></div>
+    <div id="surprise-2" class="modal"><div class="modal-content"><span class="close" onclick="closeSurprise(2)">&times;</span><img src="photo2.jpg" alt="Фото 2"><p>тут должна быть подпись к фотке, но я еще ее не выбрал!</p></div></div>
+    <div id="surprise-3" class="modal"><div class="modal-content"><span class="close" onclick="closeSurprise(3)">&times;</span><img src="photo3.jpg" alt="Фото 3"><p>тут должна быть подпись к фотке, но я еще ее не выбрал!</p></div></div>
+
+
+    <div id="surprise-4" class="modal"><div class="modal-content"><span class="close" onclick="closeSurprise(4)">&times;</span><p>❤️❤️❤️❤️❤️❤️</p><audio controls src="голос.mp3">Браузер не поддерживает аудио.</audio></div></div>
+    <div id="surprise-5" class="modal"><div class="modal-content"><span class="close" onclick="closeSurprise(5)">&times;</span><p>❤️❤️❤️❤️❤️❤️</p><audio controls src="голос2.mp3">Браузер не поддерживает аудио.</audio></div></div>
+    <div id="surprise-6" class="modal"><div class="modal-content"><span class="close" onclick="closeSurprise(6)">&times;</span><p>❤️❤️❤️❤️❤️❤️</p><audio controls src="голос3.mp3">Браузер не поддерживает аудио.</audio></div></div>
+
+    <script>
+
+        const openedInitialBoxes = new Set();
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const heartsContainer = document.querySelector('.hearts-container');
+            function createHeart() {
+                const heart = document.createElement('div');
+                heart.classList.add('heart');
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.animationDuration = Math.random() * 3 + 7 + 's';
+                heartsContainer.appendChild(heart);
+                setTimeout(() => { heart.remove(); }, 10000);
+            }
+            setInterval(createHeart, 300);
+        });
+
+        function showSurprise(id) {
+            const modal = document.getElementById(`surprise-${id}`);
+            if (modal) {
+                modal.style.display = 'flex';
+            }
+        }
+
+        function closeSurprise(id) {
+            const modal = document.getElementById(`surprise-${id}`);
+            if (modal) {
+                modal.style.display = 'none';
+            }
+
+            switch (id) {
+                case 1:
+                case 2:
+                case 3:
+    
+                    openedInitialBoxes.add(id);
+            
+                    if (openedInitialBoxes.size === 3) {
+                
+                        document.getElementById('secret-container-1').style.display = 'flex';
+                    }
+                    break;
+                case 4:
+
+                    document.getElementById('secret-container-1').style.display = 'none';
+                    document.getElementById('secret-container-2').style.display = 'flex';
+                    break;
+                case 5:
+
+                    document.getElementById('secret-container-2').style.display = 'none';
+                    document.getElementById('secret-container-3').style.display = 'flex';
+                    break;
+            }
+        }
+    </script>
+</body>
+</html>
